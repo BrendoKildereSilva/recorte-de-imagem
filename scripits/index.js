@@ -20,6 +20,8 @@ var offsetYImg = 0;
 var x = 0;
 var y = 0;
 // 
+var calculoYCentralizar = 0
+var calculoXCentralizar = 0
 // 
 var HeightimgOriginal = 0; 
 var WidthimgOriginal = 0;  
@@ -134,11 +136,10 @@ reader.onload = () => {
             WidthimgOriginal = ImagePreview.width;                
             HeightimgOriginal = ImagePreview.height; 
             
-            var calculoY = (HeightExibicao - PreviewheightImg) / 2
-            var calculoX = (WidthExibicao - PreviewwidthImg) / 2
+            calculoYCentralizar = (HeightExibicao - PreviewheightImg) / 2
+            calculoXCentralizar = (WidthExibicao - PreviewwidthImg) / 2
 
-            ImagePreview.style.top =  calculoY + 'px'
-            ImagePreview.style.left = calculoX + 'px'
+            centralizarImagem();
 
             ImagePreview.style.width = PreviewwidthImg + 'px'
             ImagePreview.style.height = PreviewheightImg + 'px'
@@ -330,7 +331,11 @@ else if(ZoomAplicado < ZoomMaximo){
     PreviewwidthImg = PreviewwidthImg + ZoomAplicadoWidth
     PreviewheightImg = PreviewheightImg + ZoomAplicadoHeight
 
+
+
+
     ZoomAplicado++
+    centralizarImagem();
 }
 
     
@@ -351,6 +356,8 @@ else if(ZoomAplicado > ZoomOutMinimo){
     PreviewheightImg = PreviewheightImg - ZoomAplicadoHeight
 
     ZoomAplicado--
+
+    centralizarImagem();
 
 }
     
@@ -426,12 +433,7 @@ buttonResetar.addEventListener('click', () => {
     }
     else{
         
-        // centralizar imagem
-        var calculoY = (HeightExibicao - HeightimgOriginal) / 2
-        var calculoX = (WidthExibicao - WidthimgOriginal) / 2
-        
-        ImagePreview.style.top =  calculoY + 'px'
-        ImagePreview.style.left = calculoX + 'px'
+        centralizarImagem();
 
         ImagePreview.style.width = WidthimgOriginal + 'px'
         ImagePreview.style.height = HeightimgOriginal + 'px'
@@ -492,6 +494,17 @@ scale = 1
 
 EsconderOuExibirCSS()   
 })
+
+function centralizarImagem(){
+
+    calculoYCentralizar = (HeightExibicao - PreviewheightImg) / 2
+    calculoXCentralizar = (WidthExibicao - PreviewwidthImg) / 2
+
+    console.log(calculoXCentralizar, calculoYCentralizar)
+
+    ImagePreview.style.left = calculoXCentralizar + 'px'
+    ImagePreview.style.top = calculoYCentralizar + 'px'
+}
 
 function EsconderOuExibirCSS(){
 
