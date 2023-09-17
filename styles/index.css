@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,200&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+html{
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+}
+
+    
+
+
+body{
+    font-size: 1.6rem;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main{
+    padding: 3rem;
+    width: 80%;
+    height: 80%;
+    border-radius: 1rem;
+    border: 1px solid #00000070;
+    box-shadow: 5px 15px 15px 5px #00000040;
+    
+}
+
+h1{
+    color: #613DC1;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.mensagem-de-erro{
+    text-align: center;
+    font-size: 1.3rem;
+    color: rgb(255, 111, 111);
+}
+
+.container-corte{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.container-input-dimensão{
+    display: none;
+}
+
+.container-de-exibicao{
+    overflow: hidden;
+    position: relative;
+    border: 3px solid #613DC1;
+    transition: 0.5s ease;
+
+}
+
+.container-de-exibicao:hover{
+    background: #613DC190;
+    transition: 0.5s ease;
+}
+
+
+.container-buttons{
+    display: none;
+    border-bottom: 3px solid #613DC1;
+}
+
+.container-buttons button, .container-resultado a{
+    background: #fff;
+    margin: 2rem 0.5rem 0.5rem 0.5rem;
+    border: 0.1rem solid #613DC1;
+    border-radius: 50%;
+    height: 3.5rem;
+    width: 3.5rem;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.container-buttons button:hover, 
+.container-resultado a:hover,
+.container-buttons button:hover .icon,
+.container-resultado a:hover .icon
+{
+    background: #613DC1;
+    fill: #fff;
+}
+
+.container-buttons button:hover span,
+.container-resultado a:hover span
+{
+    display: flex;
+}
+
+
+.container-buttons button span,
+.container-resultado a span
+
+{
+    display: none;
+    position: absolute;
+    top: -20px;
+    background: #613DC1;
+    padding: 0rem 0.5rem;
+    color: #fff;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+}
+
+.container-resultado a span{
+    top: -23px;
+}
+
+
+svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+.icon{
+    fill: #613DC1;
+}
+
+
+
+
+
+
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: grab;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center center;
+}
+
+.image:active {
+    cursor: grabbing;
+}
+
+.container-de-captura{
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px dashed #613DC1;
+
+}
+
+input[type=file]{
+    display: none;
+}
+
+.label-input-file, .button-add-nova-imagem{
+    width: 30rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6rem;
+    font-size: 1.5rem;
+    color: #fff;
+    border: 0px;
+    cursor: pointer;
+    margin: 1rem;
+    background:  #613DC1;
+    transition: 0.3s ease;  
+}
+
+.label-input-file:hover,
+.button-add-nova-imagem:hover{
+    transition: 0.3s ease;  
+    background:  #4f27be
+}
+
+p{
+    font-weight: bold;
+    margin: 1rem auto;
+    width: 75%;
+    font-size: 1.1rem;
+    color:  #613DC1;
+}
+
+.container-input label{
+    color: #613DC1;
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+.container-input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-input div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-input div input{
+    font-size: 1.5rem;
+    width: 8rem;
+    padding: 5px;
+    text-align: center;
+    outline: none;
+    border: 0.1rem solid #ccc;
+    border-radius: 0.6rem;
+}
+
+.container-input div input:focus{
+    border: 0.1rem solid #613DC1;
+    
+}
+
+
+/* CONTAINER RESULTADO */
+
+.container-resultado{
+    display: none;
+    width: 100%;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+#container-image{
+    border: 1px solid #613DC1;
+}
+
+.container-resultado, button{
+    width: 100%;
+}
+
+.container-resultado a svg{
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+
+
+@media(max-width: 750px){
+
+main{
+    width: 100vw;
+    height: 100vh;
+    border: 0px;
+    box-shadow: 0px;
+}
+
+h1{
+    margin-top: 5rem;
+}
+
+p{
+    
+    width: 90%;
+    
+}
+}
+
+
+@media(min-height: 1000px){
+html{
+    font-size: 100.5%;
+}
+
+p{
+    width: 100%;
+}
+
+
+
+
+}
+
+
+
+
+
+   
+
+ 
