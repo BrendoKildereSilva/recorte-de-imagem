@@ -62,10 +62,10 @@ function handleMediaChange(mediaQuery){
 if (mediaQuery.matches) {
     
     ContainerExibicao.style.width = '300px'
-    ContainerExibicao.style.height = '300px'
+    ContainerExibicao.style.height = '350px'
 
     WidthExibicao = 300
-    HeightExibicao = 300
+    HeightExibicao = 350
 
     cropper.style.width = `200px`
     cropper.style.height = `200px`
