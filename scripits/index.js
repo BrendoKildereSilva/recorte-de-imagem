@@ -52,52 +52,52 @@ var imagemCortada = false
 const inputWidthCorte = document.getElementById('input-width-d-corte')  
 const inputHeightCorte = document.getElementById('input-height-d-corte') 
 // 
-ContainerExibicao.style.width = `${WidthExibicao}px`
-ContainerExibicao.style.height = `${HeightExibicao}px`
+// ContainerExibicao.style.width = `${WidthExibicao}px`
+// ContainerExibicao.style.height = `${HeightExibicao}px`
 // 
 cropper.style.width = `${WidthCorte}px`
 cropper.style.height = `${HeightCorte}px`
 // 
 const mediaQuery = window.matchMedia('(max-width: 750px)');
 
-function handleMediaChange(mediaQuery){
-if (mediaQuery.matches) {
+// function handleMediaChange(mediaQuery){
+// if (mediaQuery.matches) {
     
-    ContainerExibicao.style.width = '300px'
-    ContainerExibicao.style.height = '350px'
+//     ContainerExibicao.style.width = '600px'
+//     ContainerExibicao.style.height = '350px'
 
-    WidthExibicao = 300
-    HeightExibicao = 350
+//     WidthExibicao = 300
+//     HeightExibicao = 350
 
-    cropper.style.width = `200px`
-    cropper.style.height = `200px`
+//     cropper.style.width = `200px`
+//     cropper.style.height = `200px`
 
-    document.getElementById('input-width-d-corte').value = '200'
-    document.getElementById('input-height-d-corte').value = '200'
+//     document.getElementById('input-width-d-corte').value = '200'
+//     document.getElementById('input-height-d-corte').value = '200'
 
-    WidthCorte = 200
-    HeightCorte = 200
-} 
-else{
-    ContainerExibicao.style.width = '600px'
-    ContainerExibicao.style.height = '300px'
+//     WidthCorte = 200
+//     HeightCorte = 200
+// } 
+// else{
+//     ContainerExibicao.style.width = '600px'
+//     ContainerExibicao.style.height = '300px'
 
-    WidthExibicao = 600
-    HeightExibicao = 300
+//     WidthExibicao = 600
+//     HeightExibicao = 300
     
     
-    cropper.style.width = `200px`
-    cropper.style.height = `200px`
+//     cropper.style.width = `200px`
+//     cropper.style.height = `200px`
     
-    document.getElementById('input-width-d-corte').value = '200'
-    document.getElementById('input-height-d-corte').value = '200'
+//     document.getElementById('input-width-d-corte').value = '200'
+//     document.getElementById('input-height-d-corte').value = '200'
     
-    WidthCorte = 200
-    HeightCorte = 200
+//     WidthCorte = 200
+//     HeightCorte = 200
 
-}
+// }
 
-}
+// }
 
 mediaQuery.addListener(handleMediaChange);
 handleMediaChange(mediaQuery);
