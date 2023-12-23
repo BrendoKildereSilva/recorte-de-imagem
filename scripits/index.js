@@ -1,16 +1,17 @@
-const buttonAtualizar = document.getElementById('button-atualizar')
+const LabelbuttonAddImagem = document.getElementById('labelbutton-add-imagem')
+const ContainerExibicao = document.getElementById('container-de-exibicao')
+const ContainerCapturaImage = document.getElementById('container-de-captura')
 
+const buttonAtualizar = document.getElementById('button-atualizar')
 const buttonZoom = document.getElementById('button-Zoom')
 const buttonZoomOut = document.getElementById('button-Zoom-out')
 const buttonCortar = document.getElementById('button-cortar')
 const buttonResetar = document.getElementById('button-resetar')
 const ButtonExcluir = document.getElementById('button-excluir')
-const ContainerExibicao = document.getElementById('container-de-exibicao')
-const cropper = document.getElementById('container-de-captura')
 const buttonCortarNovaImagem = document.getElementById('button-cortar-nov-imagem')
 var MensagemDeErro = document.getElementById('mensagem-de-erro')
 // 
-var inputfile = document.getElementById('input-file')
+var inputfile = document.getElementById('input-add-file-image')
 // 
 var ImagePreview = document.getElementById('img-preview')
 var isDraggimg = false;
@@ -52,55 +53,9 @@ var imagemCortada = false
 const inputWidthCorte = document.getElementById('input-width-d-corte')  
 const inputHeightCorte = document.getElementById('input-height-d-corte') 
 // 
-// ContainerExibicao.style.width = `${WidthExibicao}px`
-// ContainerExibicao.style.height = `${HeightExibicao}px`
+ContainerCapturaImage.style.width = `${WidthCorte}px`
+ContainerCapturaImage.style.height = `${HeightCorte}px`
 // 
-cropper.style.width = `${WidthCorte}px`
-cropper.style.height = `${HeightCorte}px`
-// 
-const mediaQuery = window.matchMedia('(max-width: 750px)');
-
-// function handleMediaChange(mediaQuery){
-// if (mediaQuery.matches) {
-    
-//     ContainerExibicao.style.width = '600px'
-//     ContainerExibicao.style.height = '350px'
-
-//     WidthExibicao = 300
-//     HeightExibicao = 350
-
-//     cropper.style.width = `200px`
-//     cropper.style.height = `200px`
-
-//     document.getElementById('input-width-d-corte').value = '200'
-//     document.getElementById('input-height-d-corte').value = '200'
-
-//     WidthCorte = 200
-//     HeightCorte = 200
-// } 
-// else{
-//     ContainerExibicao.style.width = '600px'
-//     ContainerExibicao.style.height = '300px'
-
-//     WidthExibicao = 600
-//     HeightExibicao = 300
-    
-    
-//     cropper.style.width = `200px`
-//     cropper.style.height = `200px`
-    
-//     document.getElementById('input-width-d-corte').value = '200'
-//     document.getElementById('input-height-d-corte').value = '200'
-    
-//     WidthCorte = 200
-//     HeightCorte = 200
-
-// }
-
-// }
-
-mediaQuery.addListener(handleMediaChange);
-handleMediaChange(mediaQuery);
 
 
 inputWidthCorte.addEventListener('change', () => {
@@ -113,6 +68,8 @@ AtualizarDimensao()
 })
 
 inputfile.addEventListener('change', () => {
+
+
 var file = inputfile.files[0]
 var ExtensaoFile = file.name.slice(-4).toLowerCase() 
 
@@ -124,34 +81,31 @@ else{
     const reader = new FileReader();
 
 reader.onload = () => {
+    LabelbuttonAddImagem.style.display = 'none'
+    ContainerCapturaImage.style.display = 'block'
+
     ImagePreview.src = reader.result;
 
     
     
     // Espera a imagem carregar antes de obter suas dimensões
     ImagePreview.onload = () => {
+
             PreviewwidthImg = ImagePreview.width; 
             PreviewheightImg = ImagePreview.height;
 
             WidthimgOriginal = ImagePreview.width;                
             HeightimgOriginal = ImagePreview.height; 
             
-            calculoYCentralizar = (HeightExibicao - PreviewheightImg) / 2
-            calculoXCentralizar = (WidthExibicao - PreviewwidthImg) / 2
-
-            centralizarImagem();
-
-            ImagePreview.style.width = PreviewwidthImg + 'px'
-            ImagePreview.style.height = PreviewheightImg + 'px'
-
-            // Definindo o numero para quando for da zom
-            ZoomAplicadoWidth = (PreviewwidthImg * 10) / 100
-            ZoomAplicadoHeight = (PreviewheightImg * 10) / 100
+            
+            
+            centralizarImagem()
+            
+            
 
 
             StatusExisteIMG = true
             MensagemDeErro.innerText = ''
-            EsconderOuExibirCSS();
 
         
     };
@@ -234,8 +188,8 @@ window.addEventListener('touchmove', (event) => {
 function VerificarScala(){
 
         // calculando limite eixo y - x positivos
-        var YpositivoLimit = (HeightExibicao /2) - HeightCorte/2
-        var XpositivoLimit = (WidthExibicao /2) - WidthCorte/2
+        var YpositivoLimit = (ContainerExibicao.clientHeight /2) - HeightCorte/2
+        var XpositivoLimit = (ContainerExibicao.clientWidth /2) - WidthCorte/2
 
 
         // calculando limite eixo y - x negativos
@@ -248,9 +202,6 @@ function VerificarScala(){
 
         var Yposition = ImagePreview.style.top.replace('px', "")
         var Xposition = ImagePreview.style.left.replace('px', "")
-
-        // 
-        // 
         
 
         if(Yposition > YpositivoLimit || Yposition < YnegativoLimit ){
@@ -291,26 +242,13 @@ function VerificarScala(){
 
 
 function AtualizarDimensao(){
-var ValueInputWidthCorte = parseInt(document.getElementById('input-width-d-corte').value)
-var ValueInputHeightCorte = parseInt(document.getElementById('input-height-d-corte').value)
-
-
-if(ValueInputWidthCorte < WidthExibicao && ValueInputHeightCorte < HeightExibicao){
+    
     WidthCorte = document.getElementById('input-width-d-corte').value
     HeightCorte = document.getElementById('input-height-d-corte').value
-    // 
-    const ContainerExibicao = document.getElementById('container-de-exibicao')
-    const ContainerCorte = document.getElementById('container-de-captura')
-    // 
-    ContainerCorte.style.width = `${WidthCorte}px` 
-    ContainerCorte.style.height = `${HeightCorte}px`
-}
-else{
-    MensagemDeErro.innerText = 'o tamanho da area de corte não pode ser maior que a area de exibição'
 
-    document.getElementById('input-width-d-corte').value = WidthCorte
-    document.getElementById('input-height-d-corte').value = HeightCorte
-}
+    ContainerCapturaImage.style.width = `${WidthCorte}px` 
+    ContainerCapturaImage.style.height = `${HeightCorte}px`
+
 
 
 
@@ -322,6 +260,7 @@ if(StatusExisteIMG == false){
     MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
 }
 else if(ZoomAplicado < ZoomMaximo){
+
     var calcularZoom = scale + AplicarZom
     scale = calcularZoom
     
@@ -374,7 +313,7 @@ buttonCortar.addEventListener('click', (e) => {
     else if(StatusScala == true){
 
         const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
-        const cropperRect = cropper.getBoundingClientRect();
+        const cropperRect = ContainerCapturaImage.getBoundingClientRect();
         const canvas = document.createElement('canvas');
         canvas.width = WidthCorte;
         canvas.height = HeightCorte;
@@ -387,36 +326,39 @@ buttonCortar.addEventListener('click', (e) => {
         const y = (cropperRect.top - imgRect.top + ImagePreview.scrollTop + (cropperRect.height - HeightCorte) / 2) / scale ;
         ctx.drawImage(ImagePreview, x, y, WidthCorte / scale, HeightCorte / scale, 0, 0, WidthCorte, HeightCorte);
 
-        const resultContainer= document.getElementById('container-image')
+        const resultContainer = document.getElementById('container-image')
         resultContainer.innerHTML = ""
         resultContainer.style.height = HeightCorte + 'px'
         resultContainer.style.width = WidthCorte + 'px'
         resultContainer.appendChild(canvas);
 
+        console.log(HeightCorte)
+        console.log(WidthCorte)
+
         // Convertendo o canvas em um Blob usando fetch
 
-        const originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
-        const newFileName = `cropped_image.${originalFileExtension}`;
+        // const originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
+        // const newFileName = `cropped_image.${originalFileExtension}`;
 
-        var buttonBaixar = document.getElementById('button-baixar')
+        // var buttonBaixar = document.getElementById('button-baixar')
 
-        canvas.toBlob((blob) => {
-            var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
+        // canvas.toBlob((blob) => {
+        //     var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
             
-            console.log('Imagem recortada:', file); 
+        //     console.log('Imagem recortada:', file); 
 
-            var Reader = new FileReader();
+        //     var Reader = new FileReader();
 
-            Reader.onload = () =>{
-                buttonBaixar.href = Reader.result
-            }
+        //     Reader.onload = () =>{
+        //         buttonBaixar.href = Reader.result
+        //     }
 
-            Reader.readAsDataURL(file)
-        });
+        //     Reader.readAsDataURL(file)
+        // });
 
         imagemCortada = true
         MensagemDeErro.innerText = '' 
-        EsconderOuExibirCSS();
+       
 
     }
     else
@@ -471,7 +413,6 @@ ButtonExcluir.addEventListener('click', () => {
 
 
         StatusExisteIMG = false
-        EsconderOuExibirCSS()
 
 
     }
@@ -492,46 +433,13 @@ scale = 1
 
 
 
-EsconderOuExibirCSS()   
 })
 
 function centralizarImagem(){
 
-    calculoYCentralizar = (HeightExibicao - PreviewheightImg) / 2
-    calculoXCentralizar = (WidthExibicao - PreviewwidthImg) / 2
+    ImagePreview.style.top = (ContainerExibicao.clientHeight - HeightimgOriginal) / 2 + 'px'
+    ImagePreview.style.left = (ContainerExibicao.clientWidth - WidthimgOriginal) / 2 + 'px'
 
-    console.log(calculoXCentralizar, calculoYCentralizar)
-
-    ImagePreview.style.left = calculoXCentralizar + 'px'
-    ImagePreview.style.top = calculoYCentralizar + 'px'
+    
 }
 
-function EsconderOuExibirCSS(){
-
-var ContainerDimensao = document.getElementById('container-input-dimensão')
-var LabelFile = document.getElementById('label-file')
-var ContainerButton = document.getElementById('container-button')
-var ContainerCorte = document.getElementById('container-corte')
-var ContaineResultado = document.getElementById('container-resultado')
-
-
-if(StatusExisteIMG == true){
-    ContainerDimensao.style.display = 'block'
-    LabelFile.style.display = 'none'
-    ContainerButton.style.display = 'flex'
-}
-else{
-    ContainerDimensao.style.display = 'none'
-    LabelFile.style.display = 'flex'
-    ContainerButton.style.display = 'none'
-}
-
-if(imagemCortada == true){
-    ContainerCorte.style.display = 'none'
-    ContaineResultado.style.display = 'flex'
-}
-else{
-    ContainerCorte.style.display = 'flex'
-    ContaineResultado.style.display = 'none'
-}
-}
