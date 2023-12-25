@@ -67,6 +67,38 @@ AtualizarDimensao()
 
 })
 
+buttonZoom.addEventListener('click', () => {
+    Zoom();
+})
+
+buttonZoomOut.addEventListener('click', () => {
+    zoomout()
+})
+
+
+// dar zoom ou zoomout com o scroll do mause
+ContainerExibicao.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    var ValueDelta = e.deltaY.toString()
+    var DeltaPositivoOuNegativo = ValueDelta.slice(0, 1)
+    
+    console.log(DeltaPositivoOuNegativo)
+    
+
+    // o - é positivo por algum motivo desconhecido :(
+
+    if(DeltaPositivoOuNegativo == "-"){
+        Zoom();
+    }
+    else
+    {
+        zoomout()
+    }
+});
+
+
+
+
 inputfile.addEventListener('change', () => {
 
 
@@ -96,6 +128,8 @@ reader.onload = () => {
 
             WidthimgOriginal = ImagePreview.width;                
             HeightimgOriginal = ImagePreview.height; 
+
+            console.log('width: ',  WidthimgOriginal, 'height: ', HeightimgOriginal)
             
             
             
@@ -136,8 +170,6 @@ ImagePreview.addEventListener('touchstart', (event) => {
     offsetYImg = event.touches[0].clientY - ImagePreview.getBoundingClientRect().top;
 });
 // 
-// 
-// 
 // QUANDO PARAR DE PRECIONAR O BUTÃO DE CLICK, PARAR DE MOVIMENTAR A IMAGEM
 // PC
 window.addEventListener('mouseup', () => {
@@ -147,8 +179,6 @@ window.addEventListener('mouseup', () => {
 window.addEventListener('touchend', () => {
     isDraggimg = false
 });
-// 
-// 
 // 
 // MOVIMENTAR IMAGEM
 // PC
@@ -168,6 +198,7 @@ window.addEventListener('mousemove', (event) => {
 
 });
 // MOBILE
+
 window.addEventListener('touchmove', (event) => {
     if (isDraggimg) {
         const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
@@ -255,52 +286,65 @@ function AtualizarDimensao(){
     
 }
 
-buttonZoom.addEventListener('click', () => {
-if(StatusExisteIMG == false){
-    MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
-}
-else if(ZoomAplicado < ZoomMaximo){
+function Zoom(){
 
-    var calcularZoom = scale + AplicarZom
-    scale = calcularZoom
-    
-    ImagePreview.style.width = PreviewwidthImg + ZoomAplicadoWidth + 'px'
-    ImagePreview.style.height = PreviewheightImg + ZoomAplicadoHeight + 'px'
-    
-    PreviewwidthImg = PreviewwidthImg + ZoomAplicadoWidth
-    PreviewheightImg = PreviewheightImg + ZoomAplicadoHeight
-
-
-
-
-    ZoomAplicado++
-    centralizarImagem();
-}
+    var calculoWidth = WidthimgOriginal * 0.1
+    var calculoHeight = HeightimgOriginal * 0.1
 
     
-})
 
-buttonZoomOut.addEventListener('click', () => {
-if(StatusExisteIMG == false){
-    MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
+
+    PreviewheightImg = parseInt(PreviewheightImg + calculoHeight)
+    PreviewwidthImg = parseInt(PreviewwidthImg + calculoWidth)
+
+    ImagePreview.style.width = PreviewwidthImg + 'px'
+    ImagePreview.style.height = PreviewheightImg + 'px'
+
+
+    scale =  Math.round((scale + 0.1) * 10) / 10
+
+
+    imagemContainuarNaMesmaPosition('positivo', calculoWidth, calculoHeight)
+
+
+ 
 }
-else if(ZoomAplicado > ZoomOutMinimo){
-    var calcularZoom = scale - AplicarZom
-    scale = calcularZoom
 
-    ImagePreview.style.width = PreviewwidthImg - ZoomAplicadoWidth + 'px'
-    ImagePreview.style.height = PreviewheightImg - ZoomAplicadoHeight + 'px'
 
-    PreviewwidthImg = PreviewwidthImg - ZoomAplicadoWidth
-    PreviewheightImg = PreviewheightImg - ZoomAplicadoHeight
+function zoomout(){
+    var calculoWidth = WidthimgOriginal * 0.1
+    var calculoHeight = HeightimgOriginal * 0.1
 
-    ZoomAplicado--
+    PreviewheightImg = parseInt(PreviewheightImg - calculoHeight)
+    PreviewwidthImg = parseInt(PreviewwidthImg - calculoWidth)
 
-    centralizarImagem();
+    ImagePreview.style.width = PreviewwidthImg + 'px'
+    ImagePreview.style.height = PreviewheightImg + 'px'
 
+
+    scale =  Math.round((scale - 0.1) * 10) / 10
+
+
+    imagemContainuarNaMesmaPosition('negativo', calculoWidth, calculoHeight)
 }
+
+function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, calculoHeight){
     
-})
+    if(ZomPositivoOuNegativo == 'positivo'){
+        ImagePreview.style.left = (ImagePreview.style.left.slice(0,-2) - (calculoWidth/2)) + 'px'
+        ImagePreview.style.top = (ImagePreview.style.top.slice(0,-2) - (calculoHeight/2)) + 'px'
+    }
+    else if(ZomPositivoOuNegativo == 'negativo')
+    {
+
+        var valueLeft = parseInt(ImagePreview.style.left.slice(0,-2))
+        var valueTop = parseInt(ImagePreview.style.top.slice(0,-2))
+
+        ImagePreview.style.left = parseInt(valueLeft + (calculoWidth/2)) + 'px'
+        ImagePreview.style.top =  parseInt(valueTop + (calculoHeight/2)) + 'px'
+    }
+}
+
 
 
 buttonCortar.addEventListener('click', (e) => {
@@ -332,32 +376,31 @@ buttonCortar.addEventListener('click', (e) => {
         resultContainer.style.width = WidthCorte + 'px'
         resultContainer.appendChild(canvas);
 
-        console.log(HeightCorte)
-        console.log(WidthCorte)
-
         // Convertendo o canvas em um Blob usando fetch
 
-        // const originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
-        // const newFileName = `cropped_image.${originalFileExtension}`;
+        const originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
+        const newFileName = `cropped_image.${originalFileExtension}`;
 
-        // var buttonBaixar = document.getElementById('button-baixar')
+        var buttonBaixar = document.createElement('a')
 
-        // canvas.toBlob((blob) => {
-        //     var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
+        canvas.toBlob((blob) => {
+            var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
             
-        //     console.log('Imagem recortada:', file); 
+            console.log('Imagem recortada:', file); 
 
-        //     var Reader = new FileReader();
+            var Reader = new FileReader();
 
-        //     Reader.onload = () =>{
-        //         buttonBaixar.href = Reader.result
-        //     }
-
-        //     Reader.readAsDataURL(file)
-        // });
-
-        imagemCortada = true
-        MensagemDeErro.innerText = '' 
+            Reader.onload = () =>{
+                buttonBaixar.innerText = 'BAIXAR BAIXAR BAIXAR BAIXAR BAIXAR BAIXAR'
+                buttonBaixar.href = '../public/icon.png'
+                buttonBaixar.download = true
+                buttonBaixar.click()
+            }
+            
+            resultContainer.appendChild(buttonBaixar)
+            Reader.readAsDataURL(file)
+        });
+        
        
 
     }
@@ -437,8 +480,8 @@ scale = 1
 
 function centralizarImagem(){
 
-    ImagePreview.style.top = (ContainerExibicao.clientHeight - HeightimgOriginal) / 2 + 'px'
-    ImagePreview.style.left = (ContainerExibicao.clientWidth - WidthimgOriginal) / 2 + 'px'
+    ImagePreview.style.top = (ContainerExibicao.clientHeight - PreviewheightImg) / 2 + 'px'
+    ImagePreview.style.left = (ContainerExibicao.clientWidth - PreviewwidthImg) / 2 + 'px'
 
     
 }
