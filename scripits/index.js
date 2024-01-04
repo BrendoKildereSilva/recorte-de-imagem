@@ -10,6 +10,7 @@ const buttonResetar = document.getElementById('button-resetar')
 const ButtonExcluir = document.getElementById('button-excluir')
 const buttonCortarNovaImagem = document.getElementById('button-cortar-nov-imagem')
 var MensagemDeErro = document.getElementById('mensagem-de-erro')
+var containerBranco = document.getElementById('container-branco')
 // 
 var inputfile = document.getElementById('input-add-file-image')
 // 
@@ -47,7 +48,7 @@ var ZoomAplicadoWidth = 0
 var ZoomAplicadoHeight = 0
 // 
 var StatusScala = undefined
-var StatusExisteIMG = false
+var ExisteIMG = false
 var imagemCortada = false
 // 
 const inputWidthCorte = document.getElementById('input-width-d-corte')  
@@ -56,6 +57,8 @@ const inputHeightCorte = document.getElementById('input-height-d-corte')
 ContainerCapturaImage.style.width = `${WidthCorte}px`
 ContainerCapturaImage.style.height = `${HeightCorte}px`
 // 
+
+
 
 
 inputWidthCorte.addEventListener('change', () => {
@@ -82,8 +85,6 @@ ContainerExibicao.addEventListener("wheel", (e) => {
     var ValueDelta = e.deltaY.toString()
     var DeltaPositivoOuNegativo = ValueDelta.slice(0, 1)
     
-    console.log(DeltaPositivoOuNegativo)
-    
 
     // o - é positivo por algum motivo desconhecido :(
 
@@ -95,7 +96,6 @@ ContainerExibicao.addEventListener("wheel", (e) => {
         zoomout()
     }
 });
-
 
 
 
@@ -113,8 +113,7 @@ else{
     const reader = new FileReader();
 
 reader.onload = () => {
-    LabelbuttonAddImagem.style.display = 'none'
-    ContainerCapturaImage.style.display = 'block'
+    
 
     ImagePreview.src = reader.result;
 
@@ -129,17 +128,15 @@ reader.onload = () => {
             WidthimgOriginal = ImagePreview.width;                
             HeightimgOriginal = ImagePreview.height; 
 
-            console.log('width: ',  WidthimgOriginal, 'height: ', HeightimgOriginal)
-            
-            
-            
             centralizarImagem()
             
+
             
-
-
-            StatusExisteIMG = true
+            containerBranco.style.display = 'none'
+            ExisteIMG = true
             MensagemDeErro.innerText = ''
+            LabelbuttonAddImagem.style.display = 'none'
+            ContainerCapturaImage.style.display = 'block'
 
         
     };
@@ -213,7 +210,6 @@ window.addEventListener('touchmove', (event) => {
     }
 
 });
-
 
 
 function VerificarScala(){
@@ -346,71 +342,25 @@ function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, ca
 }
 
 
-
-buttonCortar.addEventListener('click', (e) => {
-    VerificarScala()
-
-
-    if(StatusExisteIMG == false){
-        MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
-    }
-    else if(StatusScala == true){
-
-        const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
-        const cropperRect = ContainerCapturaImage.getBoundingClientRect();
-        const canvas = document.createElement('canvas');
-        canvas.width = WidthCorte;
-        canvas.height = HeightCorte;
-        const ctx = canvas.getContext('2d');
-
-        const imgRect = ImagePreview.getBoundingClientRect();
-
+ButtonExcluir.addEventListener('click', () => {
+    ExisteIMG = false
+    scale = 1
     
-        const x = (cropperRect.left  - imgRect.left + ImagePreview.scrollLeft + (cropperRect.width - WidthCorte) / 2)/ scale ;
-        const y = (cropperRect.top - imgRect.top + ImagePreview.scrollTop + (cropperRect.height - HeightCorte) / 2) / scale ;
-        ctx.drawImage(ImagePreview, x, y, WidthCorte / scale, HeightCorte / scale, 0, 0, WidthCorte, HeightCorte);
+    PreviewheightImg = null;
+    PreviewwidthImg = null;
+    
+    ImagePreview.style.width = null
+    ImagePreview.style.height = null
+    
+    
+    ImagePreview.src = ""
+    inputfile.value = ""
+    
+    containerBranco.style.display = 'block'
+    LabelbuttonAddImagem.style.display = 'flex'
+    ContainerCapturaImage.style.display = 'none'
 
-        const resultContainer = document.getElementById('container-image')
-        resultContainer.innerHTML = ""
-        resultContainer.style.height = HeightCorte + 'px'
-        resultContainer.style.width = WidthCorte + 'px'
-        resultContainer.appendChild(canvas);
-
-        // Convertendo o canvas em um Blob usando fetch
-
-        const originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
-        const newFileName = `cropped_image.${originalFileExtension}`;
-
-        var buttonBaixar = document.createElement('a')
-
-        canvas.toBlob((blob) => {
-            var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
-            
-            console.log('Imagem recortada:', file); 
-
-            var Reader = new FileReader();
-
-            Reader.onload = () =>{
-                buttonBaixar.innerText = 'BAIXAR BAIXAR BAIXAR BAIXAR BAIXAR BAIXAR'
-                buttonBaixar.href = '../public/icon.png'
-                buttonBaixar.download = true
-                buttonBaixar.click()
-            }
-            
-            resultContainer.appendChild(buttonBaixar)
-            Reader.readAsDataURL(file)
-        });
-        
-       
-
-    }
-    else
-    {
-        MensagemDeErro.innerText = 'Erro: fora de scala' 
-    }
-
-
-});
+})
 
 buttonResetar.addEventListener('click', () => {
     if(StatusExisteIMG == false){
@@ -434,49 +384,77 @@ buttonResetar.addEventListener('click', () => {
     }
 })
 
-ButtonExcluir.addEventListener('click', () => {
+buttonCortar.addEventListener('click', (e) => {
+    console.log('slave karaio')
+    VerificarScala()
 
-    if(StatusExisteIMG == false){
-        MensagemDeErro.innerText = 'adicione uma imagem'
+
+    if(ExisteIMG == false){
+        MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
+    }
+    else if(StatusScala == true){
+
+        const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
+        const cropperRect = ContainerCapturaImage.getBoundingClientRect();
+        const canvas = document.createElement('canvas');
+        canvas.width = WidthCorte;
+        canvas.height = HeightCorte;
+        const ctx = canvas.getContext('2d');
+
+        const imgRect = ImagePreview.getBoundingClientRect();
+
+    
+        const x = (cropperRect.left  - imgRect.left + ImagePreview.scrollLeft + (cropperRect.width - WidthCorte) / 2)/ scale ;
+        const y = (cropperRect.top - imgRect.top + ImagePreview.scrollTop + (cropperRect.height - HeightCorte) / 2) / scale ;
+        ctx.drawImage(ImagePreview, x, y, WidthCorte / scale, HeightCorte / scale, 0, 0, WidthCorte, HeightCorte);
+
+        // const resultContainer = document.getElementById('container-image')
+        // resultContainer.innerHTML = ""
+        // resultContainer.style.height = HeightCorte + 'px'
+        // resultContainer.style.width = WidthCorte + 'px'
+
+        // resultContainer.appendChild(canvas);
+
+        // Convertendo o canvas em um Blob usando fetch
+
+        var originalFileExtension = inputfile.files[0].name.split('.').pop(); // Captura a extensão da imagem original
+        var newFileName = `cropped_image.${originalFileExtension}`;
+
+        var regexCapturarExtensao = /.[A-Z-a-z]+$/
+        var NomeOriginalDaImagem = inputfile.files[0].name.replace(regexCapturarExtensao, "")
+
+        var buttonBaixar = document.createElement('a')
+
+        canvas.toBlob((blob) => {
+            var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
+            
+            console.log('Imagem recortada:', file); 
+
+            var Reader = new FileReader();
+
+            Reader.onload = () =>{
+                buttonBaixar.href = Reader.result
+                buttonBaixar.download = NomeOriginalDaImagem + '.' + originalFileExtension
+                buttonBaixar.click()
+            }
+            
+            Reader.readAsDataURL(file)
+        });
+        
+       
+
     }
     else
     {
-        ImagePreview.src = ""
-
-        PreviewheightImg = null;
-        PreviewwidthImg = null;
-
-        ImagePreview.style.width = null
-        ImagePreview.style.height = null
-        inputfile.value = ""
-
-        ZoomAplicado = 0
-        scale = 1
-
-
-
-        StatusExisteIMG = false
-
-
+        MensagemDeErro.innerText = 'Erro: fora de scala' 
     }
-})
 
-buttonCortarNovaImagem.addEventListener('click', () => {
-ImagePreview.src = ""
-PreviewheightImg = null;
-PreviewwidthImg = null;
-ImagePreview.style.width = null
-ImagePreview.style.height = null
-StatusExisteIMG = false
-imagemCortada  = false
-inputfile.value = ""
-ZoomAplicado = 0
-scale = 1
+
+});
 
 
 
 
-})
 
 function centralizarImagem(){
 

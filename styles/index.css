@@ -9,19 +9,31 @@ html{
     
 body{
     font-size: 1.6rem;
-    height: 100vh;
+    height: 95vh;
 
     display: grid;
-    grid-template-columns: 80vw 20vw;
-    grid-template-rows: 20vh 80vh;
-    grid-column-gap: 10px; 
-    grid-row-gap: 10px; 
+    justify-content: space-between;
+
+    grid-template-columns: 80vw 18vw;
+    grid-template-rows: 10vh 80vh;
+    
+    grid-column-gap: 1rem; 
+    grid-row-gap: 1rem; 
+
+    position: relative;
 }
 
 
 header{
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+
+    display: flex;
+    align-items: center;
+}
+
+header img{
+    height: 5rem;
 }
 
 .container-de-exibicao{
@@ -29,9 +41,11 @@ header{
     grid-row: 2 / 3;
 }
 
-.container-buttons{
+.container-propriedades{
+    position: relative;
     grid-column: 2 / 3;
     grid-row: 1 / 3;
+
 }
 
 main{
@@ -44,10 +58,15 @@ main{
     
 }
 
+
+
+
 h1{
     color: #613DC1;
     text-align: center;
     font-size: 2rem;
+    padding: 0rem 2rem;
+    white-space: nowrap;
 }
 
 .mensagem-de-erro{
@@ -80,70 +99,130 @@ h1{
 
 
 
+.container-propriedades{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 
-.container-buttons{
-    border-bottom: 3px solid #613DC1;
+    justify-content: space-between;
+
+    font-weight: 100;
 }
 
-.container-buttons button, .container-resultado a{
-    background: #fff;
-    margin: 2rem 0.5rem 0.5rem 0.5rem;
-    border: 0.1rem solid #613DC1;
-    border-radius: 50%;
-    height: 5rem;
-    width: 5rem;
-    cursor: pointer;
-
+.container-propriedades span{
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    
+    height: 10vh;
+    color:  #613DC1;
+    font-size: 2rem;
+    margin: 0rem 0rem 1rem 0rem;
+
 }
 
-.container-buttons button:hover, 
-.container-resultado a:hover,
-.container-buttons button:hover .icon,
-.container-resultado a:hover .icon
-{
-    background: #613DC1;
-    fill: #fff;
-}
-
-.container-buttons button:hover span,
-.container-resultado a:hover span
-{
+.container-input-dimensão{
     display: flex;
+    flex-direction: column;
+}
+
+.container-input-dimensão p{
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.container-input-dimensão .inputs{
+    display: flex;
+    width: 100%;
+    font-size: 2rem;
+
+    justify-content: space-between;
 }
 
 
-.container-buttons button span,
-.container-resultado a span
+.container-input-dimensão .inputs div{
+    width: 47%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-{
-    display: none;
-    position: absolute;
-    top: -20px;
-    background: #613DC1;
-    padding: 0rem 0.5rem;
+.container-input-dimensão .inputs div input{
+    width: 100%;
+    border: 0.1rem solid #ccc;
+    text-align: center;
+    color: #707070;
+    outline: none;
+    height: 4rem;
+    border-radius: 1rem;
+}
+
+.container-propriedades .container-buttons{
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 47% 47%;
+    grid-template-rows: 5rem 5rem;
+    row-gap: 1rem;
+
+}
+
+.container-propriedades .container-buttons button{
+    border-radius: 1rem;
+    border: 0px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.3rem;
     color: #fff;
-    border-radius: 0.5rem;
-    white-space: nowrap;
+    font-weight: bold;
+
+    border: #613DC1 0.1rem solid ;
+    color: #613DC1;
 }
 
-.container-resultado a span{
-    top: -23px;
+.container-propriedades .container-buttons button:hover{
+    background: #613DC1;
+    color: #fff;
 }
 
 
-svg{
-    width: 3rem;
-    height: 3rem;
+
+
+.container-propriedades .button-cortar-imagem{
+    height: 10vh;
+    background: transparent;
+    border-radius: 1rem;
+    background: transparent;
+    border: 0px;
+    cursor: pointer;
+
+    background: #613DC1;
+    color: #fff;
+    font-size: 1.5rem;
 }
 
-.icon{
-    fill: #613DC1;
+
+.container-propriedades .button-cortar-imagem:hover{
+    background: #4f27be;
 }
+
+.container-branco{
+    position: absolute;
+    background: #ffffff70;
+    height: 95vh;
+    width: 18vw;
+
+    top: 0px;
+    right: 0px;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -209,38 +288,6 @@ p{
     color:  #613DC1;
 }
 
-.container-input label{
-    color: #613DC1;
-    font-size: 1.5rem;
-    white-space: nowrap;
-}
-.container-input{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.container-input div{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.container-input div input{
-    font-size: 1.5rem;
-    width: 8rem;
-    padding: 5px;
-    text-align: center;
-    outline: none;
-    border: 0.1rem solid #ccc;
-    border-radius: 0.6rem;
-}
-
-.container-input div input:focus{
-    border: 0.1rem solid #613DC1;
-    
-}
 
 
 /* CONTAINER RESULTADO */
