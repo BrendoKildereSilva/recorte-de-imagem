@@ -363,21 +363,19 @@ ButtonExcluir.addEventListener('click', () => {
 })
 
 buttonResetar.addEventListener('click', () => {
-    if(StatusExisteIMG == false){
+    if(ExisteIMG == false){
         MensagemDeErro.innerText = 'adicione uma imagem'
     }
     else{
         
-        centralizarImagem();
-
+        
         ImagePreview.style.width = WidthimgOriginal + 'px'
         ImagePreview.style.height = HeightimgOriginal + 'px'
-
-        ZoomAplicado = 0
-
+        
         PreviewwidthImg = WidthimgOriginal
         PreviewheightImg = HeightimgOriginal
-
+        
+        centralizarImagem();
         scale = 1
 
 
@@ -392,6 +390,7 @@ buttonCortar.addEventListener('click', (e) => {
     if(ExisteIMG == false){
         MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
     }
+
     else if(StatusScala == true){
 
         const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
