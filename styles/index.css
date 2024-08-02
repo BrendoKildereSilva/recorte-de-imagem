@@ -249,6 +249,10 @@ header label:hover:before{
     fill:rgb(246, 98, 98);
 }
 
+.container-erro button svg path{ 
+    stroke:#a41010;
+}
+
 .container-erro button svg:hover{
     
 

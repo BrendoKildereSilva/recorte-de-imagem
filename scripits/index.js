@@ -115,13 +115,15 @@ ContainerExibicao.addEventListener("wheel", (e) => {
 
 inputfile.addEventListener('change', () => {
 
-
+const regexAnalizarExtensao = /\.(jpg|jpeg|png|gif|bmp|tiff|svg|webp|heif|heic)$/i;
 
 var file = inputfile.files[0]
-var ExtensaoFile = file.name.slice(-4).toLowerCase() 
+var fileName = inputfile.files[0].name
 
-if(ExtensaoFile != '.jpg' && ExtensaoFile != '.png'){
+var Extensao = regexAnalizarExtensao.test(fileName)
 
+if(!Extensao){
+    AbrirOuFecharContainerError(true, "Apenas imagem com o formato:  jpg, jpeg, png, gif, bmp, tiff,svg, webp, heif, heic")
 }
 
 else{
