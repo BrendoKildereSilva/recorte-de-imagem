@@ -73,6 +73,7 @@ h1{
 }
 
 h2{
+    max-width: 100rem;
     font-size: 2rem;
     text-align: center;
     letter-spacing: 0.3rem;
@@ -165,6 +166,8 @@ header label:hover:before{
 
 
 
+
+
 .container-escala{
     z-index: 99;
     display: none;
@@ -206,22 +209,50 @@ header label:hover:before{
 }
 
 .container-branco .container-erro{
+    position: relative;
     background: #fff;
     height: 10rem;
     width: 50rem;
-    box-shadow: 1px 1px 5px 1px #00000080;
+    box-shadow: 1px 1px 5px 1px #cccccc90;
     text-align: center;
     padding: 3rem;
     border-radius: 7rem;
-
+    
+    display: flex;
     align-items: center;
     justify-content: center
 }
 
 .container-branco .container-erro p{
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: rgb(246, 98, 98);
     font-weight: bold;
+}
+
+.container-erro button{
+    height: 5rem;
+    width: 5rem;
+
+    position: absolute;
+    top: 1rem;
+    right: 6rem;
+
+    background: transparent;
+    border: 0px;
+}
+
+.container-erro button svg{
+    cursor: pointer;
+    height: 3rem;
+    width: 3rem;
+
+    fill:rgb(246, 98, 98);
+}
+
+.container-erro button svg:hover{
+    
+
+    fill:rgb(244, 75, 75);
 }
 
 
@@ -380,9 +411,30 @@ input[type=file]{
 
 @media(max-width: 1050px){
     html{
-        font-size: 30%;
+        font-size: 40%;
     }
 }
+
+
+@media( max-width: 500px){
+    h1{
+        font-size: 6rem;
+    }
+
+    h2{
+        font-size: 1.5rem;
+    }
+    .container-de-exibicao{
+        height: 60vh;
+    }
+
+    .container-buttons{
+        top: 0px;
+        right: 0px;
+    }
+}
+
+
 
  
 

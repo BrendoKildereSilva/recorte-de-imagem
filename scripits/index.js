@@ -4,17 +4,19 @@ const containerAdicionarImagem = document.getElementById('container-add-imagem')
 const buttonAtualizar = document.getElementById('button-atualizar')
 
 const containerButtons = document.getElementById('container-buttons')
+const containerBranco = document.getElementById('container-branco')
 const containerEscala = document.getElementById('container-escala')
-const containerCapturaBranco = document.getElementById('container-branco-image')
 
 const buttonZoom = document.getElementById('button-Zoom')
 const buttonZoomOut = document.getElementById('button-Zoom-out')
 const buttonCortar = document.getElementById('button-cortar')
 const buttonResetar = document.getElementById('button-resetar')
 const ButtonExcluir = document.getElementById('button-excluir')
+// 
+const buttonFecharContainerErro = document.getElementById('button-fechar-container-erro')
 
 const buttonCortarNovaImagem = document.getElementById('button-cortar-nov-imagem')
-var MensagemDeErro = document.getElementById('mensagem-de-erro')
+var mensagemDeErro = document.getElementById('mensagem-de-erro')
 // 
 var inputfile = document.getElementById('input-add-file-image')
 // 
@@ -84,22 +86,30 @@ buttonZoomOut.addEventListener('click', () => {
 
 
 // dar zoom ou zoomout com o scroll do mause
+
+
 ContainerExibicao.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    var ValueDelta = e.deltaY.toString()
-    var DeltaPositivoOuNegativo = ValueDelta.slice(0, 1)
-    
+    if (ExisteIMG == true) {
+        e.preventDefault();
+        var ValueDelta = e.deltaY.toString()
+        var DeltaPositivoOuNegativo = ValueDelta.slice(0, 1)
+        
 
-    // o - é positivo por algum motivo desconhecido :(
+        // o - é positivo por algum motivo desconhecido :(
 
-    if(DeltaPositivoOuNegativo == "-"){
-        Zoom();
+        if(DeltaPositivoOuNegativo == "-"){
+            Zoom();
+        }
+        else
+        {
+            zoomout()
+        }
     }
-    else
-    {
-        zoomout()
-    }
+
+
 });
+
+
 
 
 
@@ -111,7 +121,7 @@ var file = inputfile.files[0]
 var ExtensaoFile = file.name.slice(-4).toLowerCase() 
 
 if(ExtensaoFile != '.jpg' && ExtensaoFile != '.png'){
-    MensagemDeErro.innerText = 'Apenas arquivos .png e .jpg'
+
 }
 
 else{
@@ -124,7 +134,6 @@ reader.onload = () => {
     containerAdicionarImagem.style.display = "none"
     containerButtons.style.display = 'flex'
     containerEscala.style.display = 'flex'
-    containerCapturaBranco.style.display = 'flex'
     ContainerCapturaImage.style.display = 'block'
     
     
@@ -133,7 +142,8 @@ reader.onload = () => {
 
             if(ImagePreview.width == 0 || ImagePreview.height == 0){
                 ExcluirImagem();
-                alert('tente novamente')
+                AbrirOuFecharContainerError(true, "Tente Novamente")
+                console.log('error')
             }
 
             PreviewwidthImg = ImagePreview.width; 
@@ -160,34 +170,17 @@ reader.readAsDataURL(file);
 
 })  
 
-// CLICAR NA IMAGEM E PERMITIR QUE MOVIMENTE-A
+
 // PC
+// CLICAR NA IMAGEM E PERMITIR QUE MOVIMENTE-LA
+
 ImagePreview.addEventListener('mousedown', (event) => {
 event.preventDefault();
     isDraggimg = true;
     offsetXImg = event.clientX - ImagePreview.getBoundingClientRect().left;
     offsetYImg = event.clientY - ImagePreview.getBoundingClientRect().top;
 });
-// MOBILE
-ImagePreview.addEventListener('touchstart', (event) => {
-    event.preventDefault();
-    isDraggimg = true;
-    offsetXImg = event.touches[0].clientX - ImagePreview.getBoundingClientRect().left;
-    offsetYImg = event.touches[0].clientY - ImagePreview.getBoundingClientRect().top;
-});
-// 
-// QUANDO PARAR DE PRECIONAR O BUTÃO DE CLICK, PARAR DE MOVIMENTAR A IMAGEM
-// PC
-window.addEventListener('mouseup', () => {
-    isDraggimg = false
-});
-// MOBILE
-window.addEventListener('touchend', () => {
-    isDraggimg = false
-});
-// 
-// MOVIMENTAR IMAGEM
-// PC
+
 window.addEventListener('mousemove', (event) => {
     if (isDraggimg) {
 
@@ -203,22 +196,93 @@ window.addEventListener('mousemove', (event) => {
     }
 
 });
-// MOBILE
 
-window.addEventListener('touchmove', (event) => {
-    if (isDraggimg) {
+window.addEventListener('mouseup', () => {
+    isDraggimg = false
+});
+
+
+// MOBILE
+let initialDistance = null;
+
+
+function getDistance(touches) {
+    const [touch1, touch2] = touches;
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+
+ImagePreview.addEventListener('touchstart', (event) => {
+    
+
+
+    if(event.touches.length === 1){
+        event.preventDefault();
+        isDraggimg = true;
+        offsetXImg = event.touches[0].clientX - ImagePreview.getBoundingClientRect().left;
+        offsetYImg = event.touches[0].clientY - ImagePreview.getBoundingClientRect().top;
+    }
+    else if(event.touches.length === 2){
+        initialDistance = getDistance(event.touches);
+    }
+    
+});
+
+
+
+
+
+const minChange = 20; // Ajuste o valor conforme necessário
+
+ImagePreview.addEventListener('touchmove', (event) => {
+
+
+    if (event.touches.length === 2) {
+       
+
+        const currentDistance = getDistance(event.touches);
+        if (initialDistance !== null) {
+            const distanceChange = currentDistance - initialDistance;
+            if (Math.abs(distanceChange) > minChange) {
+                if (distanceChange > 0) {
+                    Zoom()
+                } else {
+                    zoomout()
+                }
+                initialDistance = currentDistance; // Atualiza a distância inicial para o próximo movimento
+            }
+        }
+    }
+
+    if (event.touches.length === 1 && isDraggimg) {
         const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
         x = event.touches[0].clientX - offsetXImg -  containerRect.left;
         y = event.touches[0].clientY - offsetYImg - containerRect.top;
 
         
-        ImagePreview.style.top = `${y}px`;
+         ImagePreview.style.top = `${y}px`;
         ImagePreview.style.left = `${x}px`;
+}
 
-        
+    
+});
+
+ImagePreview.addEventListener('touchend', (event) => {
+    if (event.touches.length < 2) {
+        initialDistance = null;
     }
 
+    if (event.touches.length === 0) {
+        isDraggimg = false;
+    }
 });
+
+
+
+
+
 
 
 function VerificarScala(){
@@ -317,7 +381,10 @@ function Zoom(){
 
 
 function zoomout(){
-    if(ExisteIMG){
+
+
+if(scale > 0.2 && ExisteIMG){
+
         
         var calculoWidth = WidthimgOriginal * 0.1
         var calculoHeight = HeightimgOriginal * 0.1
@@ -333,7 +400,8 @@ function zoomout(){
         
         
         imagemContainuarNaMesmaPosition('negativo', calculoWidth, calculoHeight)
-    }
+}
+
 }
 
 function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, calculoHeight){
@@ -375,13 +443,13 @@ function ExcluirImagem(){
     ContainerCapturaImage.style.display = 'none'
     containerButtons.style.display = "none"
     containerEscala.style.display = "none"
-    containerCapturaBranco.style.display = "none"
     containerAdicionarImagem.style.display = 'flex'
 }
 
 buttonResetar.addEventListener('click', () => {
     if(ExisteIMG == false){
-        MensagemDeErro.innerText = 'adicione uma imagem'
+        AbrirOuFecharContainerError(true, "adicionar uma imagem")
+        
     }
     else{
         
@@ -400,12 +468,12 @@ buttonResetar.addEventListener('click', () => {
 })
 
 buttonCortar.addEventListener('click', (e) => {
-    console.log('slave karaio')
+  
     VerificarScala()
 
 
     if(ExisteIMG == false){
-        MensagemDeErro.innerText = 'Erro: Adicione uma imagem' 
+        AbrirOuFecharContainerError(true, "Insira uma imagem")
     }
 
     else if(StatusScala == true){
@@ -444,7 +512,7 @@ buttonCortar.addEventListener('click', (e) => {
         canvas.toBlob((blob) => {
             var file = new File([blob], newFileName, { type: `image/${originalFileExtension}` });
             
-            console.log('Imagem recortada:', file); 
+            // console.log('Imagem recortada:', file); 
 
             var Reader = new FileReader();
 
@@ -462,11 +530,30 @@ buttonCortar.addEventListener('click', (e) => {
     }
     else
     {
-        MensagemDeErro.innerText = 'Erro: fora de scala' 
+        AbrirOuFecharContainerError(true, "Fora de scala")
     }
 
 
 });
+
+
+function AbrirOuFecharContainerError(container, MessageError){
+    if(container == true){
+        containerBranco.style.display = 'flex'
+        mensagemDeErro.innerText = MessageError
+    }
+    else if(container == false)
+    {
+        containerBranco.style.display = "none"
+        mensagemDeErro.innerText = ""
+    }
+}
+
+buttonFecharContainerErro.addEventListener('click', (e) => {
+    e.preventDefault();
+    AbrirOuFecharContainerError(false, "")
+
+} )
 
 
 
@@ -477,6 +564,5 @@ function centralizarImagem(){
     ImagePreview.style.top = (ContainerExibicao.clientHeight - PreviewheightImg) / 2 + 'px'
     ImagePreview.style.left = (ContainerExibicao.clientWidth - PreviewwidthImg) / 2 + 'px'
 
-    
 }
 
