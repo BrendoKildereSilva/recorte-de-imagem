@@ -1,16 +1,20 @@
-const LabelbuttonAddImagem = document.getElementById('labelbutton-add-imagem')
 const ContainerExibicao = document.getElementById('container-de-exibicao')
 const ContainerCapturaImage = document.getElementById('container-de-captura')
-
+const containerAdicionarImagem = document.getElementById('container-add-imagem')
 const buttonAtualizar = document.getElementById('button-atualizar')
+
+const containerButtons = document.getElementById('container-buttons')
+const containerEscala = document.getElementById('container-escala')
+const containerCapturaBranco = document.getElementById('container-branco-image')
+
 const buttonZoom = document.getElementById('button-Zoom')
 const buttonZoomOut = document.getElementById('button-Zoom-out')
 const buttonCortar = document.getElementById('button-cortar')
 const buttonResetar = document.getElementById('button-resetar')
 const ButtonExcluir = document.getElementById('button-excluir')
+
 const buttonCortarNovaImagem = document.getElementById('button-cortar-nov-imagem')
 var MensagemDeErro = document.getElementById('mensagem-de-erro')
-var containerBranco = document.getElementById('container-branco')
 // 
 var inputfile = document.getElementById('input-add-file-image')
 // 
@@ -71,11 +75,11 @@ AtualizarDimensao()
 })
 
 buttonZoom.addEventListener('click', () => {
-    Zoom();
+        Zoom();
 })
 
 buttonZoomOut.addEventListener('click', () => {
-    zoomout()
+        zoomout()
 })
 
 
@@ -102,6 +106,7 @@ ContainerExibicao.addEventListener("wheel", (e) => {
 inputfile.addEventListener('change', () => {
 
 
+
 var file = inputfile.files[0]
 var ExtensaoFile = file.name.slice(-4).toLowerCase() 
 
@@ -114,13 +119,22 @@ else{
 
 reader.onload = () => {
     
-
+    ExisteIMG = true
     ImagePreview.src = reader.result;
-
+    containerAdicionarImagem.style.display = "none"
+    containerButtons.style.display = 'flex'
+    containerEscala.style.display = 'flex'
+    containerCapturaBranco.style.display = 'flex'
+    ContainerCapturaImage.style.display = 'block'
     
     
     // Espera a imagem carregar antes de obter suas dimensões
     ImagePreview.onload = () => {
+
+            if(ImagePreview.width == 0 || ImagePreview.height == 0){
+                ExcluirImagem();
+                alert('tente novamente')
+            }
 
             PreviewwidthImg = ImagePreview.width; 
             PreviewheightImg = ImagePreview.height;
@@ -132,11 +146,6 @@ reader.onload = () => {
             
 
             
-            containerBranco.style.display = 'none'
-            ExisteIMG = true
-            MensagemDeErro.innerText = ''
-            LabelbuttonAddImagem.style.display = 'none'
-            ContainerCapturaImage.style.display = 'block'
 
         
     };
@@ -284,44 +293,47 @@ function AtualizarDimensao(){
 
 function Zoom(){
 
-    var calculoWidth = WidthimgOriginal * 0.1
-    var calculoHeight = HeightimgOriginal * 0.1
+    if(ExisteIMG){
 
-    
-
-
-    PreviewheightImg = parseInt(PreviewheightImg + calculoHeight)
-    PreviewwidthImg = parseInt(PreviewwidthImg + calculoWidth)
-
-    ImagePreview.style.width = PreviewwidthImg + 'px'
-    ImagePreview.style.height = PreviewheightImg + 'px'
-
-
-    scale =  Math.round((scale + 0.1) * 10) / 10
-
-
-    imagemContainuarNaMesmaPosition('positivo', calculoWidth, calculoHeight)
-
-
- 
+        var calculoWidth = WidthimgOriginal * 0.1
+        var calculoHeight = HeightimgOriginal * 0.1
+        
+        
+        
+        
+        PreviewheightImg = parseInt(PreviewheightImg + calculoHeight)
+        PreviewwidthImg = parseInt(PreviewwidthImg + calculoWidth)
+        
+        ImagePreview.style.width = PreviewwidthImg + 'px'
+        ImagePreview.style.height = PreviewheightImg + 'px'
+        
+        
+        scale =  Math.round((scale + 0.1) * 10) / 10
+        
+        
+        imagemContainuarNaMesmaPosition('positivo', calculoWidth, calculoHeight)       
+    }
 }
 
 
 function zoomout(){
-    var calculoWidth = WidthimgOriginal * 0.1
-    var calculoHeight = HeightimgOriginal * 0.1
-
-    PreviewheightImg = parseInt(PreviewheightImg - calculoHeight)
-    PreviewwidthImg = parseInt(PreviewwidthImg - calculoWidth)
-
-    ImagePreview.style.width = PreviewwidthImg + 'px'
-    ImagePreview.style.height = PreviewheightImg + 'px'
-
-
-    scale =  Math.round((scale - 0.1) * 10) / 10
-
-
-    imagemContainuarNaMesmaPosition('negativo', calculoWidth, calculoHeight)
+    if(ExisteIMG){
+        
+        var calculoWidth = WidthimgOriginal * 0.1
+        var calculoHeight = HeightimgOriginal * 0.1
+        
+        PreviewheightImg = parseInt(PreviewheightImg - calculoHeight)
+        PreviewwidthImg = parseInt(PreviewwidthImg - calculoWidth)
+        
+        ImagePreview.style.width = PreviewwidthImg + 'px'
+        ImagePreview.style.height = PreviewheightImg + 'px'
+        
+        
+        scale =  Math.round((scale - 0.1) * 10) / 10
+        
+        
+        imagemContainuarNaMesmaPosition('negativo', calculoWidth, calculoHeight)
+    }
 }
 
 function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, calculoHeight){
@@ -343,6 +355,10 @@ function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, ca
 
 
 ButtonExcluir.addEventListener('click', () => {
+    ExcluirImagem()
+})
+
+function ExcluirImagem(){
     ExisteIMG = false
     scale = 1
     
@@ -356,11 +372,12 @@ ButtonExcluir.addEventListener('click', () => {
     ImagePreview.src = ""
     inputfile.value = ""
     
-    containerBranco.style.display = 'block'
-    LabelbuttonAddImagem.style.display = 'flex'
     ContainerCapturaImage.style.display = 'none'
-
-})
+    containerButtons.style.display = "none"
+    containerEscala.style.display = "none"
+    containerCapturaBranco.style.display = "none"
+    containerAdicionarImagem.style.display = 'flex'
+}
 
 buttonResetar.addEventListener('click', () => {
     if(ExisteIMG == false){
