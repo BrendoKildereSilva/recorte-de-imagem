@@ -1,0 +1,135 @@
+@import "../../node_modules/@flaticon/flaticon-uicons/css/all/all.css";
+@import "./colors.scss";
+
+.barra-de-ferramentas{
+  width: 100vw;
+  height: 10vh;
+  background: #fff;
+
+  display: grid;
+  
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  box-shadow: 1px 10px 5px #41414120; 
+}
+
+.container-buttons{
+  width: 90%;
+  height: 90%;
+  margin: auto auto;
+  display: grid;
+
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(2, 35px);
+  grid-template-rows: repeat(2, 35px);
+  gap: 10px;
+}
+
+.container-buttons button{
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+
+  background: #fff;
+  border: 0px;
+  box-shadow: 1px 5px 1px #41414120; 
+
+}
+
+
+.container-buttons i{
+  color: #707070;
+}
+
+
+.container-buttons button:hover{
+  background: $primary-color;
+}
+
+.container-buttons button:hover i{
+  color: #fff;
+}
+
+.em-breve{
+  font-size: 1.5rem;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-download{
+  cursor: pointer;
+  position: absolute;
+  top: 10vh;
+  right: 0px;
+  width: 16rem;
+  height: 3rem;
+
+  background: $primary-light;
+  color: #fff;
+  font-size: 1.5rem;
+  border: 0px;
+  box-shadow: 1px 10px 5px #41414120; 
+}
+
+.open-and-closer-barra-de-tarefa{
+  display: none;
+}
+
+
+@media(max-width: 700px){
+
+  .barra-de-ferramentas{
+    position: fixed;
+    top: 0px;
+    left: -60vw;
+
+    height: 100%  ;
+    width: 60vw;
+    gap: 0px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .container-buttons{
+    height: auto;
+  }
+
+
+  .button-download{
+    width: 100%;
+    position: relative;
+    bottom: 0px;
+  }
+
+
+  .open-and-closer-barra-de-tarefa{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 60vw;
+
+    height: 5rem;
+    width: 5rem;
+
+    border-radius: 0px 0px 50% 0px;
+    border: 0px;
+
+    background: $primary-color;
+    cursor: pointer;
+    color: #Fff;
+    font-size: 2rem;
+    
+  }
+
+  .open-and-closer-barra-de-tarefa i{
+    transform: rotate(90deg);
+
+  }
+}
+
+

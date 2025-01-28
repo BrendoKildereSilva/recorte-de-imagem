@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family: 'BistroScript';
+    src: url('/public/fonts/Bistro\ Script.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Myriad pro';
+    src: url('/public/fonts/MYRIADPRO-REGULAR.OTF') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+html{
+    font-size: 62.5%;
+    font-family: 'Myriad pro', sans-serif;
+}
+
+main{
+    width: 100vw;
+    height: 100vh;
+}
+
+
+
+
+
+
+
+
