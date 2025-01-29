@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="styles/container-add-imagem.scss">
     
     <title>Ferramenta Online para Recorte de Fotos - Rápido, Fácil e Grátis</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3771156929311683"
-     crossorigin="anonymous"></script>
 
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3771156929311683"
-     crossorigin="anonymous"></script>
 
 </head>
 
@@ -22,11 +18,12 @@
 
 
 <main>
-      <div class="barra-de-ferramentas">
+
+      <div class="barra-de-ferramentas" id="barra-de-ferramentas">
 
             <div class="container-buttons">
-                  <button><i class="fi fi-bs-zoom-in"></i></button>
-                  <button><i class="fi fi-bs-zoom-out"></i></button>
+                  <button id="button-Zoom"><i class="fi fi-bs-zoom-in"></i></button>
+                  <button id="button-Zoom-out"><i class="fi fi-bs-zoom-out"></i></button>
                   <button></button>
                   <button></button>
             </div>
@@ -50,24 +47,25 @@
                   <button></button>
             </div>
 
-            <button class="button-download">Download</button>
+            <button class="button-download" id="button-cortar">Download</button>
             <button  id="button-nav-bar" class="open-and-closer-barra-de-tarefa"><i class="fi fi-br-plus"></i></button>
             
       </div>
 
 
-      <div class="container-add-imagem">
+      <div class="container-add-imagem" id="container-add-imagem">
 
             <div>
                   <H1>Recorte de imagens Online</H1>
 
                   <h2>Ferramenta Online para Recorte de Fotos - Rápido, Fácil e Grátis. Recorte Precisamente, Ajuste e Redimensione Imagens JPG,PNG, e Outros Formatos Gratuitamente</h2>
 
-                  <label for="">Adicionar imagem</label>
+                  <label for="input-add-file-image">Adicionar imagem</label>
+                  <input type="file" id="input-add-file-image" >
             </div>
       </div>
 
-      <div class="container-de-exibicao" id="container-de-exibicao">
+      <div class="area_de_trabalho" id="Area_de_trabalho">
             <img src="" id="img-preview" class="image">
             <div class="container-de-captura" id="container-de-captura">
       </div>
@@ -78,8 +76,19 @@
 </body>
 </html>
 
+
 <script src="scripits/index.js"></script>
-<script  type="module" src="scripits/barra-de-tarefas/nav-bar.js"></script>
+
+<script type="module" src="scripts/area-de-trabalho/adicionar-imagem.js"></script>
+<script type="module" src="scripts/barra-de-tarefas/functions/zoom/ScrollZoom.js"></script>
+<script type="module" src="scripts/area-de-trabalho/moverImagem/MoverImagemMobile.js"></script>
+<script type="module" src="scripts/Cropping/area-de-corte.js"></script>
+<script type="module" src="scripts/Cropping/cortar.js"></script>
+<script type="module" src="scripts/barra-de-tarefas/functions/zoom/zoom.js"></script>
+<script type="module" src="scripts/barra-de-tarefas/functions/zoom/zoomout.js"></script>
+<script  type="module" src="scripts/barra-de-tarefas/nav-bar.js"></script>
+<script  type="module" src="scripts/area-de-trabalho/moverImagem/MoverImagemDesktop.js"></script>
+<script  type="module" src="scripts/barra-de-tarefas/functions/zoom/Zomm2touch.js"></script>
 
 
 

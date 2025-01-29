@@ -5,7 +5,7 @@ export default defineConfig({
   root: './src',
   resolve: {
     alias: {
-      '@styles': path.resolve(__dirname, '.src/styles'), // Alias para facilitar o uso de SCSS
+      '@js': path.resolve(__dirname, './scripts'), 
     },
   },
 });

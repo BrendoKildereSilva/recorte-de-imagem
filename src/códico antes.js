@@ -69,22 +69,22 @@ ContainerCapturaImage.style.height = `${HeightCorte}px`
 
 
 
-inputWidthCorte.addEventListener('change', () => {
-AtualizarDimensao()
-})
+// inputWidthCorte.addEventListener('change', () => {
+// AtualizarDimensao()
+// })
 
-inputHeightCorte.addEventListener('change', () => {
-AtualizarDimensao()
+// inputHeightCorte.addEventListener('change', () => {
+// AtualizarDimensao()
 
-})
+// })
 
-buttonZoom.addEventListener('click', () => {
-        Zoom();
-})
+// buttonZoom.addEventListener('click', () => {
+//         Zoom();
+// })
 
-buttonZoomOut.addEventListener('click', () => {
-        zoomout()
-})
+// buttonZoomOut.addEventListener('click', () => {
+//         zoomout()
+// })
 
 
 // dar zoom ou zoomout com o scroll do mause
@@ -107,72 +107,10 @@ ContainerExibicao.addEventListener("wheel", (e) => {
             zoomout()
         }
     }
-
-
 });
 
 
 
-
-
-inputfile.addEventListener('change', () => {
-
-const regexAnalizarExtensao = /\.(jpg|jpeg|png|gif|bmp|tiff|svg|webp|heif|heic)$/i;
-
-var file = inputfile.files[0]
-var fileName = inputfile.files[0].name
-
-var Extensao = regexAnalizarExtensao.test(fileName)
-
-if(!Extensao){
-    AbrirOuFecharContainerError(true, "Apenas imagem com o formato:  jpg, jpeg, png, gif, bmp, tiff,svg, webp, heif, heic")
-}
-
-else{
-    const reader = new FileReader();
-
-reader.onload = () => {
-    
-    ExisteIMG = true
-    ImagePreview.src = reader.result;
-    containerAdicionarImagem.style.display = "none"
-    containerButtons.style.display = 'flex'
-    containerEscala.style.display = 'flex'
-    ContainerCapturaImage.style.display = 'block'
-    
-    
-    // Espera a imagem carregar antes de obter suas dimensões
-    ImagePreview.onload = () => {
-
-            if(ImagePreview.width == 0 || ImagePreview.height == 0){
-                ExcluirImagem();
-                AbrirOuFecharContainerError(true, "Tente Novamente")
-                console.log('error')
-            }
-
-            PreviewwidthImg = ImagePreview.width; 
-            PreviewheightImg = ImagePreview.height;
-
-            WidthimgOriginal = ImagePreview.width;                
-            HeightimgOriginal = ImagePreview.height; 
-
-            centralizarImagem()
-            
-
-            
-
-        
-    };
-
-        
-}
-
-
-reader.readAsDataURL(file);
-    
-}
-
-})  
 
 
 // PC
@@ -186,17 +124,14 @@ event.preventDefault();
 });
 
 window.addEventListener('mousemove', (event) => {
-    if (isDraggimg) {
 
+    if (isDraggimg) {
         const containerRect = document.querySelector('.container-de-exibicao').getBoundingClientRect();
         x = event.clientX - offsetXImg - containerRect.left;
         y = event.clientY - offsetYImg  - containerRect.top;
-
-        
         ImagePreview.style.top = `${y}px`;
         ImagePreview.style.left = `${x}px`;
-
-        
+ 
     }
 
 });
@@ -206,7 +141,6 @@ window.addEventListener('mouseup', () => {
 });
 
 
-// MOBILE
 let initialDistance = null;
 
 
@@ -333,10 +267,6 @@ function VerificarScala(){
         {
             StatusScala = false
         }
-
-        
-
-
 }
 
 function AtualizarDimensao(){
@@ -420,9 +350,9 @@ function imagemContainuarNaMesmaPosition(ZomPositivoOuNegativo, calculoWidth, ca
 }
 
 
-ButtonExcluir.addEventListener('click', () => {
-    ExcluirImagem()
-})
+// ButtonExcluir.addEventListener('click', () => {
+//     ExcluirImagem()
+// })
 
 function ExcluirImagem(){
     ExisteIMG = false
@@ -444,26 +374,26 @@ function ExcluirImagem(){
     containerAdicionarImagem.style.display = 'flex'
 }
 
-buttonResetar.addEventListener('click', () => {
-    if(ExisteIMG == false){
-        AbrirOuFecharContainerError(true, "adicionar uma imagem")
+// buttonResetar.addEventListener('click', () => {
+//     if(ExisteIMG == false){
+//         AbrirOuFecharContainerError(true, "adicionar uma imagem")
         
-    }
-    else{
+//     }
+//     else{
         
         
-        ImagePreview.style.width = WidthimgOriginal + 'px'
-        ImagePreview.style.height = HeightimgOriginal + 'px'
+//         ImagePreview.style.width = WidthimgOriginal + 'px'
+//         ImagePreview.style.height = HeightimgOriginal + 'px'
         
-        PreviewwidthImg = WidthimgOriginal
-        PreviewheightImg = HeightimgOriginal
+//         PreviewwidthImg = WidthimgOriginal
+//         PreviewheightImg = HeightimgOriginal
         
-        centralizarImagem();
-        scale = 1
+//         centralizarImagem();
+//         scale = 1
 
 
-    }
-})
+//     }
+// })
 
 buttonCortar.addEventListener('click', (e) => {
   
@@ -547,11 +477,11 @@ function AbrirOuFecharContainerError(container, MessageError){
     }
 }
 
-buttonFecharContainerErro.addEventListener('click', (e) => {
-    e.preventDefault();
-    AbrirOuFecharContainerError(false, "")
+// buttonFecharContainerErro.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     AbrirOuFecharContainerError(false, "")
 
-} )
+// } )
 
 function centralizarImagem(){
 

@@ -1,6 +1,5 @@
-.container-de-exibicao{
+.area_de_trabalho{
 
-  background: red;
   background: cover;
   
   position: relative;
@@ -12,7 +11,6 @@
   height: 90vh;
   width: 100vw;
   overflow: hidden;
-  transition: 0.5s ease;
   display: none;
 
 }
@@ -34,7 +32,7 @@
 
 .container-de-captura{
   display: block;
-  z-index: 11;
+  z-index: 10;
   position: absolute;
   pointer-events: none;
   top: 50%;
@@ -49,3 +47,9 @@ input[type=file]{
 }
 
 
+@media(max-width: 700px){
+
+  .area_de_trabalho{
+    height: 100vh;
+  }
+}
