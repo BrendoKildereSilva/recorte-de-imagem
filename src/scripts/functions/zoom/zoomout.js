@@ -1,4 +1,5 @@
 import {Dados, ImagePreview } from '../../index.js'
+import {ContinuarMesmaPosition } from '../moverImagem/ContinuarMesmaPosition.js'
 const buttonZoomOut = document.getElementById('button-Zoom-out')
 buttonZoomOut.addEventListener('click', () => {
   zoomout()
@@ -8,7 +9,7 @@ export function zoomout(){
 
   if(Dados['Dados_da_imagem']['scale'] > 0.2){
   
-          
+          ContinuarMesmaPosition('ZoomOut')
           var calculoWidth = Dados['Dados_da_imagem']['proporcao']['ImagemOriginal']['width'] * 0.1
           var calculoHeight =Dados['Dados_da_imagem']['proporcao']['ImagemOriginal']['height'] * 0.1
           

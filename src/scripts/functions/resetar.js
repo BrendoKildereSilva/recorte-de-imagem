@@ -1,4 +1,5 @@
 import { Dados, ImagePreview } from '../index.js'
+import { centralizarImagem } from '../functions/moverImagem/centralizarImg.js'
 
 const buttonResetar = document.getElementById('button-resetar')
 
@@ -16,6 +17,6 @@ buttonResetar.addEventListener('click', () => {
         
         Dados['Dados_da_imagem']['scale'] = 1
 
-        // centralizarImagem();
+        centralizarImagem();
 
 })

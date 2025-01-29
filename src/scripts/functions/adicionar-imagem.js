@@ -1,5 +1,6 @@
 
 import { PreparandoAmbiente, Dados, inputfile, ImagePreview } from "../index";
+import { centralizarImagem } from "./moverImagem/centralizarImg.js";
 
 
 inputfile.addEventListener('change', () => {
@@ -35,7 +36,7 @@ inputfile.addEventListener('change', () => {
               Dados['Dados_da_imagem']['proporcao']['ImagemOriginal']['width'] = ImagePreview.width
               Dados['Dados_da_imagem']['proporcao']['ImagemOriginal']['height'] = ImagePreview.height
 
-              // centralizarImagem()
+              centralizarImagem()
           };
       
               

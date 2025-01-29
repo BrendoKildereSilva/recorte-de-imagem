@@ -1,4 +1,5 @@
 import {Dados, ImagePreview } from '../../index.js'
+import {ContinuarMesmaPosition } from '../moverImagem/ContinuarMesmaPosition.js'
 const buttonZoom = document.getElementById('button-Zoom')
 
 buttonZoom.addEventListener('click', () => {
@@ -23,5 +24,6 @@ export function Zoom(){
       ImagePreview.style.width = NewValuePrewiewWidth + 'px'
       
       Dados['Dados_da_imagem']['scale'] = Math.round((Dados['Dados_da_imagem']['scale'] + 0.1) * 10) / 10;
-      // imagemContainuarNaMesmaPosition('positivo', calculoWidth, calculoHeight)       
+      ContinuarMesmaPosition('Zoom')
+    
 }
