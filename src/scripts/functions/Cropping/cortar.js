@@ -1,5 +1,6 @@
 import { VerificarScala, StatusScala, WidthCorte, HeightCorte } from './area-de-corte'
-import {  Dados, ImagePreview, area_de_corte, inputfile } from '../index'
+import {  Dados, ImagePreview, area_de_corte, inputfile } from '../../index'
+import {  CloseBarraDeFerramentas } from '../nav-bar'
 const buttonCortar = document.getElementById('button-cortar')
 
 

@@ -1,4 +1,4 @@
-import {Dados, area_de_corte, Area__de__trabalho, ImagePreview } from '../index'
+import {Dados, area_de_corte, Area__de__trabalho, ImagePreview } from '../../index'
 
 
 export var HeightCorte = 200

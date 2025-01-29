@@ -41,8 +41,8 @@
             </div>
 
             <div class="container-buttons">
-                  <button><i class="fi fi-rr-refresh"></i></button>
-                  <button><i class="fi fi-sr-trash-xmark"></i></button>
+                  <button id="button-resetar"><i class="fi fi-rr-refresh"></i></button>
+                  <button id="button-deletar"><i class="fi fi-sr-trash-xmark"></i></button>
                   <button></button>
                   <button></button>
             </div>
@@ -61,7 +61,7 @@
                   <h2>Ferramenta Online para Recorte de Fotos - Rápido, Fácil e Grátis. Recorte Precisamente, Ajuste e Redimensione Imagens JPG,PNG, e Outros Formatos Gratuitamente</h2>
 
                   <label for="input-add-file-image">Adicionar imagem</label>
-                  <input type="file" id="input-add-file-image" >
+                  <input type="file" id="input-add-file-image" accept="image/*" >
             </div>
       </div>
 
@@ -79,16 +79,18 @@
 
 <script src="scripits/index.js"></script>
 
-<script type="module" src="scripts/area-de-trabalho/adicionar-imagem.js"></script>
-<script type="module" src="scripts/barra-de-tarefas/functions/zoom/ScrollZoom.js"></script>
-<script type="module" src="scripts/area-de-trabalho/moverImagem/MoverImagemMobile.js"></script>
-<script type="module" src="scripts/Cropping/area-de-corte.js"></script>
-<script type="module" src="scripts/Cropping/cortar.js"></script>
-<script type="module" src="scripts/barra-de-tarefas/functions/zoom/zoom.js"></script>
-<script type="module" src="scripts/barra-de-tarefas/functions/zoom/zoomout.js"></script>
-<script  type="module" src="scripts/barra-de-tarefas/nav-bar.js"></script>
-<script  type="module" src="scripts/area-de-trabalho/moverImagem/MoverImagemDesktop.js"></script>
-<script  type="module" src="scripts/barra-de-tarefas/functions/zoom/Zomm2touch.js"></script>
+<script type="module" src="scripts/functions/adicionar-imagem.js"></script>
+<script type="module" src="scripts/functions/zoom/ScrollZoom.js"></script>
+<script type="module" src="scripts/functions/moverImagem/MoverImagemMobile.js"></script>
+<script type="module" src="scripts/functions/Cropping/area-de-corte.js"></script>
+<script type="module" src="scripts/functions/Cropping/cortar.js"></script>
+<script type="module" src="scripts/functions/zoom/zoom.js"></script>
+<script type="module" src="scripts/functions/zoom/zoomout.js"></script>
+<script  type="module" src="scripts/functions/nav-bar.js"></script>
+<script  type="module" src="scripts/functions/moverImagem/MoverImagemDesktop.js"></script>
+<script  type="module" src="scripts/functions/zoom/Zomm2touch.js"></script>
+<script  type="module" src="scripts/functions/resetar.js"></script>
+<script  type="module" src="scripts/functions/deleteImg.js"></script>
 
 
 

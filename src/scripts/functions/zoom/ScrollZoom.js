@@ -1,4 +1,4 @@
-import {Area__de__trabalho } from '../../../index.js'
+import {Area__de__trabalho } from '../../index.js'
 import {Zoom } from './zoom.js'
 import { zoomout } from './zoomout.js'
 

@@ -1,9 +1,9 @@
-import { ImagePreview } from '../../../index.js';
+import { ImagePreview } from '../../index.js';
 import { Zoom } from './zoom.js';
 import { zoomout } from './zoomout.js';
 
 let initialDistance = null;
-const minChange = 5; // Ajuste isso conforme necessário
+const minChange = 4; // Ajuste isso conforme necessário
 
 // Função para calcular a distância entre dois pontos de toque
 function getDistance(touches) {
@@ -22,9 +22,11 @@ ImagePreview.addEventListener('touchstart', (event) => {
 
 // Detectando o movimento dos dedos
 ImagePreview.addEventListener('touchmove', (event) => {
+    event.preventDefault();
     if (event.touches.length === 2 && initialDistance !== null) {
         const currentDistance = getDistance(event.touches);
         const distanceChange = currentDistance - initialDistance;
+        // alert('2 dedos safados :D')
 
         if (Math.abs(distanceChange) > minChange) { // Verifica se a mudança foi significativa
             if (distanceChange > 0) {
@@ -35,7 +37,8 @@ ImagePreview.addEventListener('touchmove', (event) => {
             initialDistance = currentDistance; // Atualiza a distância inicial
         }
     }
-});
+
+},{ passive: false });
 
 // Quando o toque termina, resetar a distância
 ImagePreview.addEventListener('touchend', () => {

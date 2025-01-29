@@ -1,26 +1,21 @@
 import { gsap } from "gsap";
-
-
 const buttonNavBar = document.getElementById('button-nav-bar');
-var StatusOpenOrClose = "close"
+var StatusNavBar = "close"
 
 buttonNavBar.addEventListener('click', () => {
-
-  if(StatusOpenOrClose == "close"){
-
+  console.log(StatusNavBar)
+  if(StatusNavBar == "close"){
     OpenBarraDeFerramentas()
-    StatusOpenOrClose = "open"
   }else{
 
     CloseBarraDeFerramentas()
-    StatusOpenOrClose = "close"
   }
-  
-
 })
 
 
 function OpenBarraDeFerramentas(){
+  StatusNavBar = "open"
+
   gsap.to('.barra-de-ferramentas', {
     left: "0vw"
   })
@@ -31,7 +26,9 @@ function OpenBarraDeFerramentas(){
 }
 
 
-function CloseBarraDeFerramentas(){
+export function CloseBarraDeFerramentas(){
+  StatusNavBar = "close"
+
   gsap.to('.barra-de-ferramentas', {
     left: "-60vw"
   })

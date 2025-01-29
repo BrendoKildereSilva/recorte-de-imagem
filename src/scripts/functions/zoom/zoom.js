@@ -1,4 +1,4 @@
-import {Dados, ImagePreview } from '../../../index.js'
+import {Dados, ImagePreview } from '../../index.js'
 const buttonZoom = document.getElementById('button-Zoom')
 
 buttonZoom.addEventListener('click', () => {

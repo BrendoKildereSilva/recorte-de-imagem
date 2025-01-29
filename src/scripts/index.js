@@ -20,6 +20,13 @@ export function PreparandoAmbiente() {
   BarraDeTarefas.style.pointerEvents = "all"
 }
 
+export function EncerrandoAmbiente() {
+  containerApresentacao.style.display = "flex"
+  Area__de__trabalho.style.display = "none"
+  BarraDeTarefas.style.opacity = 0.5
+  BarraDeTarefas.style.pointerEvents = "none"
+}
+
 
 
 
